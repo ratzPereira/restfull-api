@@ -3,9 +3,11 @@ package com.ratz.restfullapi.controller;
 import com.ratz.restfullapi.model.Person;
 import com.ratz.restfullapi.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/person")
@@ -33,8 +35,10 @@ public class PersonController {
   }
 
   @DeleteMapping("/{id}")
-  public void deletePerson(@PathVariable String id){
+  public ResponseEntity<?> deletePerson(@PathVariable String id){
+
     personService.deletePerson(id);
+    return ResponseEntity.noContent().build();
   }
 
   @PutMapping

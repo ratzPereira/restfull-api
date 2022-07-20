@@ -1,50 +1,74 @@
 package com.ratz.restfullapi.service.impl;
 
+import com.ratz.restfullapi.exceptions.ResourceNotFoundException;
 import com.ratz.restfullapi.model.Person;
+import com.ratz.restfullapi.repository.PersonRepository;
 import com.ratz.restfullapi.service.PersonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonServiceImpl implements PersonService {
 
   private static final Logger LOG = LoggerFactory.getLogger(PersonServiceImpl.class.getSimpleName());
 
+  @Autowired
+  private PersonRepository personRepository;
 
   @Override
   public Person findById(String id) {
-    return new Person(1L,"Ratz","Pereira","Dunno","Male");
+
+    Person person = personRepository.findById(Long.valueOf(id))
+        .orElseThrow(()-> new ResourceNotFoundException("Person with this ID not Found"));
+
+    return person;
   }
 
   @Override
   public List<Person> findAll() {
 
-    List<Person> personList = new ArrayList<>();
-
-    for (int i = 0; i < 10 ; i++) {
-      Person person = new Person(1L,"Ratz","Pereira","Dunno","Male");
-      personList.add(person);
-    }
+    List<Person> personList = personRepository.findAll();
 
     return personList;
   }
 
   @Override
   public Person createPerson(Person person) {
-    return null;
+
+    Person personToSave = new Person();
+    personToSave.setAddress(person.getAddress());
+    personToSave.setFirstName(person.getFirstName());
+    personToSave.setLastName(person.getLastName());
+    personToSave.setGender(person.getGender());
+
+    return personToSave;
   }
 
   @Override
   public void deletePerson(String id) {
 
+    Person person = personRepository.findById(Long.valueOf(id))
+
+        .orElseThrow(()-> new ResourceNotFoundException("Person with this ID not Found"));
+    personRepository.delete(person);
   }
 
   @Override
   public Person updatePerson(Person person) {
-    return null;
+
+    Person personToSave = personRepository.findById(person.getId())
+        .orElseThrow(()-> new ResourceNotFoundException("Person with this ID not Found"));
+
+    personToSave .setAddress(person.getAddress());
+    personToSave .setFirstName(person.getFirstName());
+    personToSave .setLastName(person.getLastName());
+    personToSave .setGender(person.getGender());
+
+    return personToSave;
   }
 }

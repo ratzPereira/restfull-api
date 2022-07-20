@@ -2,6 +2,7 @@ package com.ratz.restfullapi.exceptions.handler;
 
 import com.ratz.restfullapi.exceptions.ExceptionResponse;
 import com.ratz.restfullapi.exceptions.UnsupportedMathOperationException;
+import com.ratz.restfullapi.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -30,5 +31,13 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
 
     return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(ResourceNotFoundException.class)
+  public final ResponseEntity<ExceptionResponse> handleResourceNotFound(Exception ex, WebRequest request){
+
+    ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
+
+    return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
   }
 }
