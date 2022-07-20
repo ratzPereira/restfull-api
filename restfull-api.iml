@@ -83,6 +83,8 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:6.0.0-M4" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aspects:6.0.0-M4" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: mysql:mysql-connector-java:8.0.29" level="project" />
+    <orderEntry type="library" name="Maven: org.flywaydb:flyway-core:8.5.11" level="project" />
+    <orderEntry type="library" name="Maven: org.flywaydb:flyway-mysql:8.5.11" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.springframework.boot:spring-boot-devtools:3.0.0-M3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:3.0.0-M3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:3.0.0-M3" level="project" />

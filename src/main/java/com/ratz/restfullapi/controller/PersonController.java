@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/person/v1")
 public class PersonController {
 
   @Autowired
@@ -35,7 +35,7 @@ public class PersonController {
     return personService.createPerson(person);
   }
 
-  @PostMapping("/v2")
+  @PostMapping("/api/person/v2")
   public PersonDTOv2 createPersonV2(@RequestBody PersonDTOv2 person) {
 
     return personService.createPersonV2(person);
