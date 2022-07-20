@@ -1,15 +1,20 @@
 package com.ratz.restfullapi.service;
 
-import com.ratz.restfullapi.DTO.v1.PersonDTO;
-import com.ratz.restfullapi.model.Person;
+import com.ratz.restfullapi.DTO.v1.PersonDTOv1;
+import com.ratz.restfullapi.DTO.v2.PersonDTOv2;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PersonService {
-  PersonDTO findById(String id);
-  List<PersonDTO> findAll();
-  PersonDTO createPerson(PersonDTO person);
+  PersonDTOv1 findById(String id);
+
+  List<PersonDTOv1> findAll();
+
+  PersonDTOv1 createPerson(PersonDTOv1 person);
+
   void deletePerson(String id);
-  PersonDTO updatePerson(PersonDTO person);
+
+  PersonDTOv1 updatePerson(PersonDTOv1 person);
+
+  PersonDTOv2 createPersonV2(PersonDTOv2 person);
 }

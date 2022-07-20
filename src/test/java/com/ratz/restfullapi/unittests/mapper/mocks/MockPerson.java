@@ -1,6 +1,6 @@
 package com.ratz.restfullapi.unittests.mapper.mocks;
 
-import com.ratz.restfullapi.DTO.v1.PersonDTO;
+import com.ratz.restfullapi.DTO.v1.PersonDTOv1;
 import com.ratz.restfullapi.model.Person;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class MockPerson {
     return mockEntity(0);
   }
 
-  public PersonDTO mockDTO() {
+  public PersonDTOv1 mockDTO() {
     return mockDTO(0);
   }
 
@@ -24,8 +24,8 @@ public class MockPerson {
     return persons;
   }
 
-  public List<PersonDTO> mockDTOList() {
-    List<PersonDTO> persons = new ArrayList<>();
+  public List<PersonDTOv1> mockDTOList() {
+    List<PersonDTOv1> persons = new ArrayList<>();
     for (int i = 0; i < 14; i++) {
       persons.add(mockDTO(i));
     }
@@ -36,17 +36,17 @@ public class MockPerson {
     Person person = new Person();
     person.setAddress("Addres Test" + number);
     person.setFirstName("First Name Test" + number);
-    person.setGender(((number % 2)==0) ? "Male" : "Female");
+    person.setGender(((number % 2) == 0) ? "Male" : "Female");
     person.setId(number.longValue());
     person.setLastName("Last Name Test" + number);
     return person;
   }
 
-  public PersonDTO mockDTO(Integer number) {
-    PersonDTO person = new PersonDTO();
+  public PersonDTOv1 mockDTO(Integer number) {
+    PersonDTOv1 person = new PersonDTOv1();
     person.setAddress("Addres Test" + number);
     person.setFirstName("First Name Test" + number);
-    person.setGender(((number % 2)==0) ? "Male" : "Female");
+    person.setGender(((number % 2) == 0) ? "Male" : "Female");
     person.setId(number.longValue());
     person.setLastName("Last Name Test" + number);
     return person;

@@ -1,6 +1,6 @@
 package com.ratz.restfullapi.unittests.mapper;
 
-import com.ratz.restfullapi.DTO.v1.PersonDTO;
+import com.ratz.restfullapi.DTO.v1.PersonDTOv1;
 import com.ratz.restfullapi.mapper.DozerMapper;
 import com.ratz.restfullapi.model.Person;
 import com.ratz.restfullapi.unittests.mapper.mocks.MockPerson;
@@ -22,7 +22,7 @@ public class DozerConverterTest {
 
   @Test
   public void parseEntityToDTOTest() {
-    PersonDTO output = DozerMapper.parseObejct(inputObject.mockEntity(), PersonDTO.class);
+    PersonDTOv1 output = DozerMapper.parseObejct(inputObject.mockEntity(), PersonDTOv1.class);
     assertEquals(Long.valueOf(0L), output.getId());
     assertEquals("First Name Test0", output.getFirstName());
     assertEquals("Last Name Test0", output.getLastName());
@@ -32,8 +32,8 @@ public class DozerConverterTest {
 
   @Test
   public void parseEntityListToDTOListTest() {
-    List<PersonDTO> outputList = DozerMapper.parseListObejct(inputObject.mockEntityList(), PersonDTO.class);
-    PersonDTO outputZero = outputList.get(0);
+    List<PersonDTOv1> outputList = DozerMapper.parseListObejct(inputObject.mockEntityList(), PersonDTOv1.class);
+    PersonDTOv1 outputZero = outputList.get(0);
 
     assertEquals(Long.valueOf(0L), outputZero.getId());
     assertEquals("First Name Test0", outputZero.getFirstName());
@@ -41,7 +41,7 @@ public class DozerConverterTest {
     assertEquals("Addres Test0", outputZero.getAddress());
     assertEquals("Male", outputZero.getGender());
 
-    PersonDTO outputSeven = outputList.get(7);
+    PersonDTOv1 outputSeven = outputList.get(7);
 
     assertEquals(Long.valueOf(7L), outputSeven.getId());
     assertEquals("First Name Test7", outputSeven.getFirstName());
@@ -49,7 +49,7 @@ public class DozerConverterTest {
     assertEquals("Addres Test7", outputSeven.getAddress());
     assertEquals("Female", outputSeven.getGender());
 
-    PersonDTO outputTwelve = outputList.get(12);
+    PersonDTOv1 outputTwelve = outputList.get(12);
 
     assertEquals(Long.valueOf(12L), outputTwelve.getId());
     assertEquals("First Name Test12", outputTwelve.getFirstName());

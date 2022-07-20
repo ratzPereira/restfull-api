@@ -3,7 +3,7 @@ package com.ratz.restfullapi.DTO.v1;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class PersonDTO implements Serializable {
+public class PersonDTOv1 implements Serializable {
 
   @Serial
   private static final long serialVersionUID = -5452647583822206968L;
@@ -15,10 +15,10 @@ public class PersonDTO implements Serializable {
   private String address;
   private String gender;
 
-  public PersonDTO() {
+  public PersonDTOv1() {
   }
 
-  public PersonDTO(Long id, String firstName, String lastName, String address, String gender) {
+  public PersonDTOv1(Long id, String firstName, String lastName, String address, String gender) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
