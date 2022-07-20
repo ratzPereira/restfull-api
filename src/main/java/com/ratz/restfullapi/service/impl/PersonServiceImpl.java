@@ -1,5 +1,6 @@
 package com.ratz.restfullapi.service.impl;
 
+import com.ratz.restfullapi.DTO.v1.PersonDTO;
 import com.ratz.restfullapi.exceptions.ResourceNotFoundException;
 import com.ratz.restfullapi.model.Person;
 import com.ratz.restfullapi.repository.PersonRepository;
@@ -21,7 +22,7 @@ public class PersonServiceImpl implements PersonService {
   private PersonRepository personRepository;
 
   @Override
-  public Person findById(String id) {
+  public PersonDTO findById(String id) {
 
     Person person = personRepository.findById(Long.valueOf(id))
         .orElseThrow(()-> new ResourceNotFoundException("Person with this ID not Found"));
@@ -30,7 +31,7 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  public List<Person> findAll() {
+  public List<PersonDTO> findAll() {
 
     List<Person> personList = personRepository.findAll();
 
@@ -38,7 +39,7 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  public Person createPerson(Person person) {
+  public PersonDTO createPerson(PersonDTO person) {
 
     Person personToSave = new Person();
     personToSave.setAddress(person.getAddress());
@@ -46,6 +47,7 @@ public class PersonServiceImpl implements PersonService {
     personToSave.setLastName(person.getLastName());
     personToSave.setGender(person.getGender());
 
+    personRepository.save(personToSave);
     return personToSave;
   }
 
@@ -59,7 +61,7 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  public Person updatePerson(Person person) {
+  public PersonDTO updatePerson(PersonDTO person) {
 
     Person personToSave = personRepository.findById(person.getId())
         .orElseThrow(()-> new ResourceNotFoundException("Person with this ID not Found"));

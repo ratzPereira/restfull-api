@@ -1,6 +1,6 @@
 package com.ratz.restfullapi.controller;
 
-import com.ratz.restfullapi.model.Person;
+import com.ratz.restfullapi.DTO.v1.PersonDTO;
 import com.ratz.restfullapi.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,19 +17,19 @@ public class PersonController {
   private PersonService personService;
 
   @GetMapping("/{id}")
-  public Person findById(@PathVariable(value = "id") String id) {
+  public PersonDTO findById(@PathVariable(value = "id") String id) {
 
     return personService.findById(id);
   }
 
   @GetMapping
-  public List<Person> findAll(){
+  public List<PersonDTO> findAll(){
 
     return personService.findAll();
   }
 
   @PostMapping
-  public Person createPerson(@RequestBody Person person){
+  public PersonDTO createPerson(@RequestBody PersonDTO person){
 
     return personService.createPerson(person);
   }
@@ -42,7 +42,7 @@ public class PersonController {
   }
 
   @PutMapping
-  public Person updatePerson(@RequestBody Person person){
+  public PersonDTO updatePerson(@RequestBody PersonDTO person){
 
     return personService.updatePerson(person);
   }

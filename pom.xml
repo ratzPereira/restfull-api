@@ -15,6 +15,7 @@
     <description>restfull-api</description>
     <properties>
         <java.version>17</java.version>
+        <dozer.version>6.5.2</dozer.version>
     </properties>
     <dependencies>
         <dependency>
@@ -40,6 +41,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.dozermapper</groupId>
+            <artifactId>dozer-core</artifactId>
+            <version>${dozer.version}</version>
         </dependency>
     </dependencies>
 
