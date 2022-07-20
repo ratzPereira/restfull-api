@@ -2,6 +2,7 @@ package com.ratz.restfullapi.service.impl;
 
 import com.ratz.restfullapi.DTO.v1.PersonDTO;
 import com.ratz.restfullapi.exceptions.ResourceNotFoundException;
+import com.ratz.restfullapi.mapper.DozerMapper;
 import com.ratz.restfullapi.model.Person;
 import com.ratz.restfullapi.repository.PersonRepository;
 import com.ratz.restfullapi.service.PersonService;
@@ -27,7 +28,7 @@ public class PersonServiceImpl implements PersonService {
     Person person = personRepository.findById(Long.valueOf(id))
         .orElseThrow(()-> new ResourceNotFoundException("Person with this ID not Found"));
 
-    return person;
+    return DozerMapper.parseObejct(person, PersonDTO.class);
   }
 
   @Override
@@ -35,7 +36,7 @@ public class PersonServiceImpl implements PersonService {
 
     List<Person> personList = personRepository.findAll();
 
-    return personList;
+    return DozerMapper.parseListObejct(personList, PersonDTO.class);
   }
 
   @Override
@@ -48,7 +49,7 @@ public class PersonServiceImpl implements PersonService {
     personToSave.setGender(person.getGender());
 
     personRepository.save(personToSave);
-    return personToSave;
+    return DozerMapper.parseObejct(personToSave, PersonDTO.class);
   }
 
   @Override
@@ -71,6 +72,8 @@ public class PersonServiceImpl implements PersonService {
     personToSave .setLastName(person.getLastName());
     personToSave .setGender(person.getGender());
 
-    return personToSave;
+    personRepository.save(personToSave);
+
+    return DozerMapper.parseObejct(personToSave, PersonDTO.class);
   }
 }
