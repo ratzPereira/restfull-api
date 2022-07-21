@@ -3,6 +3,7 @@ package com.ratz.restfullapi.service.impl;
 import com.ratz.restfullapi.DTO.v1.PersonDTOv1;
 import com.ratz.restfullapi.DTO.v2.PersonDTOv2;
 import com.ratz.restfullapi.controller.PersonController;
+import com.ratz.restfullapi.exceptions.RequiredObjectIsNullException;
 import com.ratz.restfullapi.exceptions.ResourceNotFoundException;
 import com.ratz.restfullapi.mapper.DozerMapper;
 import com.ratz.restfullapi.mapper.custom.PersonMapper;
@@ -54,16 +55,15 @@ public class PersonServiceImpl implements PersonService {
   @Override
   public PersonDTOv1 createPerson(PersonDTOv1 person) {
 
-    Person personToSave = new Person();
-    personToSave.setAddress(person.getAddress());
-    personToSave.setFirstName(person.getFirstName());
-    personToSave.setLastName(person.getLastName());
-    personToSave.setGender(person.getGender());
+    if (person == null) throw new RequiredObjectIsNullException();
 
-    personRepository.save(personToSave);
-    PersonDTOv1 personDTOv1 = DozerMapper.parseObejct(personToSave, PersonDTOv1.class);
-    personDTOv1.add(linkTo(methodOn(PersonController.class).findById(personDTOv1.getKey())).withSelfRel());
-    return personDTOv1;
+    Person entity = DozerMapper.parseObejct(person, Person.class);
+    Person save = personRepository.save(entity);
+
+    PersonDTOv1 dto = DozerMapper.parseObejct(save, PersonDTOv1.class);
+
+    dto.add(linkTo(methodOn(PersonController.class).findById(dto.getKey())).withSelfRel());
+    return dto;
   }
 
   @Override
@@ -78,6 +78,8 @@ public class PersonServiceImpl implements PersonService {
   @Override
   public PersonDTOv1 updatePerson(PersonDTOv1 person) {
 
+    if (person == null) throw new RequiredObjectIsNullException();
+
     Person personToSave = personRepository.findById(person.getKey())
         .orElseThrow(() -> new ResourceNotFoundException("Person with this ID not Found"));
 
@@ -88,15 +90,19 @@ public class PersonServiceImpl implements PersonService {
 
     personRepository.save(personToSave);
 
-    return DozerMapper.parseObejct(personToSave, PersonDTOv1.class);
+    PersonDTOv1 dto = DozerMapper.parseObejct(personRepository.save(personToSave), PersonDTOv1.class);
+    dto.add(linkTo(methodOn(PersonController.class).findById(dto.getKey())).withSelfRel());
+    return dto;
   }
 
   @Override
   public PersonDTOv2 createPersonV2(PersonDTOv2 person) {
+//
+//    Person person1 = personMapper.convertDTOToEntityO(person);
+//    PersonDTOv2 personDTOv2 = personMapper.convertEntityToDTO(personRepository.save(person1));
+//
+//    return personDTOv2;
 
-    Person person1 = personMapper.convertDTOToEntityO(person);
-    PersonDTOv2 personDTOv2 = personMapper.convertEntityToDTO(personRepository.save(person1));
-
-    return personDTOv2;
+    return null;
   }
 }
