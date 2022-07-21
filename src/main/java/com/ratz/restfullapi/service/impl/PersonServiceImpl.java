@@ -2,6 +2,7 @@ package com.ratz.restfullapi.service.impl;
 
 import com.ratz.restfullapi.DTO.v1.PersonDTOv1;
 import com.ratz.restfullapi.DTO.v2.PersonDTOv2;
+import com.ratz.restfullapi.controller.PersonController;
 import com.ratz.restfullapi.exceptions.ResourceNotFoundException;
 import com.ratz.restfullapi.mapper.DozerMapper;
 import com.ratz.restfullapi.mapper.custom.PersonMapper;
@@ -14,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -32,7 +36,9 @@ public class PersonServiceImpl implements PersonService {
     Person person = personRepository.findById(Long.valueOf(id))
         .orElseThrow(() -> new ResourceNotFoundException("Person with this ID not Found"));
 
-    return DozerMapper.parseObejct(person, PersonDTOv1.class);
+    PersonDTOv1 personDTOv1 = DozerMapper.parseObejct(person, PersonDTOv1.class);
+    personDTOv1.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+    return personDTOv1;
   }
 
   @Override
@@ -68,7 +74,7 @@ public class PersonServiceImpl implements PersonService {
   @Override
   public PersonDTOv1 updatePerson(PersonDTOv1 person) {
 
-    Person personToSave = personRepository.findById(person.getId())
+    Person personToSave = personRepository.findById(person.getKey())
         .orElseThrow(() -> new ResourceNotFoundException("Person with this ID not Found"));
 
     personToSave.setAddress(person.getAddress());
