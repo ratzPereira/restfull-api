@@ -4,11 +4,12 @@ import com.ratz.restfullapi.DTO.v1.PersonDTOv1;
 import com.ratz.restfullapi.DTO.v2.PersonDTOv2;
 import com.ratz.restfullapi.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.ratz.restfullapi.utils.MediaTypeUtils.*;
 
 
 @RestController
@@ -18,29 +19,29 @@ public class PersonController {
   @Autowired
   private PersonService personService;
 
-  @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+  @GetMapping(value = "/{id}", produces = {APPLICATION_JSON, APPLICATION_XML, APPLICATION_YML})
   public PersonDTOv1 findById(@PathVariable(value = "id") String id) {
 
     return personService.findById(id);
   }
 
-  @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+  @GetMapping(produces = {APPLICATION_JSON, APPLICATION_XML, APPLICATION_YML})
   public List<PersonDTOv1> findAll() {
 
     return personService.findAll();
   }
 
   @PostMapping(
-      produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-      consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+      produces = {APPLICATION_JSON, APPLICATION_XML, APPLICATION_YML},
+      consumes = {APPLICATION_JSON, APPLICATION_XML, APPLICATION_YML})
   public PersonDTOv1 createPerson(@RequestBody PersonDTOv1 person) {
 
     return personService.createPerson(person);
   }
 
   @PostMapping(value = "/api/person/v2",
-      produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-      consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+      produces = {APPLICATION_JSON, APPLICATION_XML, APPLICATION_YML},
+      consumes = {APPLICATION_JSON, APPLICATION_XML, APPLICATION_YML})
   public PersonDTOv2 createPersonV2(@RequestBody PersonDTOv2 person) {
 
     return personService.createPersonV2(person);
@@ -54,8 +55,8 @@ public class PersonController {
   }
 
   @PutMapping(
-      produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-      consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+      produces = {APPLICATION_JSON, APPLICATION_XML, APPLICATION_YML},
+      consumes = {APPLICATION_JSON, APPLICATION_XML, APPLICATION_YML})
   public PersonDTOv1 updatePerson(@RequestBody PersonDTOv1 person) {
 
     return personService.updatePerson(person);
