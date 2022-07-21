@@ -15,6 +15,7 @@ public class PersonDTOv1 extends RepresentationModel<PersonDTOv1> implements Ser
   private static final long serialVersionUID = -5452647583822206968L;
 
   @Mapping("id")
+  @JsonProperty("id")
   private Long key;
 
   @JsonProperty("first_name")

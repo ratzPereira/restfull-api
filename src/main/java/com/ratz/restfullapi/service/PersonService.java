@@ -6,7 +6,7 @@ import com.ratz.restfullapi.DTO.v2.PersonDTOv2;
 import java.util.List;
 
 public interface PersonService {
-  PersonDTOv1 findById(String id);
+  PersonDTOv1 findById(Long id);
 
   List<PersonDTOv1> findAll();
 

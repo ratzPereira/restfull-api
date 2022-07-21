@@ -31,9 +31,9 @@ public class PersonServiceImpl implements PersonService {
   private PersonMapper personMapper;
 
   @Override
-  public PersonDTOv1 findById(String id) {
+  public PersonDTOv1 findById(Long id) {
 
-    Person person = personRepository.findById(Long.valueOf(id))
+    Person person = personRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Person with this ID not Found"));
 
     PersonDTOv1 personDTOv1 = DozerMapper.parseObejct(person, PersonDTOv1.class);
@@ -46,7 +46,9 @@ public class PersonServiceImpl implements PersonService {
 
     List<Person> personList = personRepository.findAll();
 
-    return DozerMapper.parseListObejct(personList, PersonDTOv1.class);
+    List<PersonDTOv1> personDTOv1s = DozerMapper.parseListObejct(personList, PersonDTOv1.class);
+    personDTOv1s.stream().forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+    return personDTOv1s;
   }
 
   @Override
@@ -59,7 +61,9 @@ public class PersonServiceImpl implements PersonService {
     personToSave.setGender(person.getGender());
 
     personRepository.save(personToSave);
-    return DozerMapper.parseObejct(personToSave, PersonDTOv1.class);
+    PersonDTOv1 personDTOv1 = DozerMapper.parseObejct(personToSave, PersonDTOv1.class);
+    personDTOv1.add(linkTo(methodOn(PersonController.class).findById(personDTOv1.getKey())).withSelfRel());
+    return personDTOv1;
   }
 
   @Override

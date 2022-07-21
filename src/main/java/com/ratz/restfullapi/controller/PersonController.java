@@ -20,7 +20,7 @@ public class PersonController {
   private PersonService personService;
 
   @GetMapping(value = "/{id}", produces = {APPLICATION_JSON, APPLICATION_XML, APPLICATION_YML})
-  public PersonDTOv1 findById(@PathVariable(value = "id") String id) {
+  public PersonDTOv1 findById(@PathVariable(value = "id") Long id) {
 
     return personService.findById(id);
   }
