@@ -7,6 +7,16 @@
       <option name="url" value="https://repo.maven.apache.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="archiva.internal" />
+      <option name="name" value="archiva.internal" />
+      <option name="url" value="https://tools.ghib.co.uk/archiva/repository/internal/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="Backbase Artifact Repository" />
+      <option name="name" value="Backbase Artifact Repository" />
+      <option name="url" value="https://repo.backbase.com/artifactory/repo/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="spring-milestones" />
       <option name="name" value="Spring Milestones" />
       <option name="url" value="https://repo.spring.io/milestone" />

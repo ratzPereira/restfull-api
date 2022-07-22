@@ -23,7 +23,7 @@
       <configuration />
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_17">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_X">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -69,6 +69,10 @@
     <orderEntry type="library" name="Maven: com.fasterxml:classmate:1.5.1" level="project" />
     <orderEntry type="library" name="Maven: org.dom4j:dom4j:2.1.3" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate.common:hibernate-commons-annotations:5.1.2.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.jaxb:jaxb-runtime:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.jaxb:jaxb-core:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.jaxb:txw2:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.istack:istack-commons-runtime:4.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-jpa:3.0.0-M4" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-commons:3.0.0-M4" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-orm:6.0.0-M4" level="project" />
@@ -86,9 +90,6 @@
     <orderEntry type="library" name="Maven: net.minidev:accessors-smart:2.4.8" level="project" />
     <orderEntry type="library" name="Maven: org.ow2.asm:asm:9.1" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.36" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: mysql:mysql-connector-java:8.0.29" level="project" />
-    <orderEntry type="library" name="Maven: org.flywaydb:flyway-core:8.5.11" level="project" />
-    <orderEntry type="library" name="Maven: org.flywaydb:flyway-mysql:8.5.11" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.13.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.13.3" level="project" />
@@ -97,9 +98,27 @@
     <orderEntry type="library" name="Maven: com.fasterxml.woodstox:woodstox-core:6.2.7" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.30" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.springframework.boot:spring-boot-devtools:3.0.0-M3" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:3.0.0-M3" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:3.0.0-M3" level="project" />
+    <orderEntry type="library" name="Maven: org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0-M1" level="project" />
+    <orderEntry type="library" name="Maven: org.springdoc:springdoc-openapi-starter-webmvc-api:2.0.0-M1" level="project" />
+    <orderEntry type="library" name="Maven: org.springdoc:springdoc-openapi-starter-common:2.0.0-M1" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger.core.v3:swagger-core-jakarta:2.1.12" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger.core.v3:swagger-annotations-jakarta:2.1.12" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger.core.v3:swagger-models-jakarta:2.1.12" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.validation:jakarta.validation-api:3.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars:swagger-ui:4.5.0" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars:webjars-locator-core:0.50" level="project" />
+    <orderEntry type="library" name="Maven: io.github.classgraph:classgraph:4.8.138" level="project" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.29" level="project" />
+    <orderEntry type="library" name="Maven: org.flywaydb:flyway-core:8.5.11" level="project" />
+    <orderEntry type="library" name="Maven: org.flywaydb:flyway-mysql:8.5.11" level="project" />
+    <orderEntry type="library" name="Maven: com.github.dozermapper:dozer-core:6.4.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.9.3" level="project" />
+    <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.12.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.5" level="project" />
+    <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.2.11" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.7.36" level="project" />
+    <orderEntry type="library" name="Maven: org.objenesis:objenesis:2.6" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.boot:spring-boot-starter-test:3.0.0-M3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.boot:spring-boot-test:3.0.0-M3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.boot:spring-boot-test-autoconfigure:3.0.0-M3" level="project" />
@@ -123,18 +142,33 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.mockito:mockito-core:4.5.1" level="project" />
     <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy:1.12.10" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: net.bytebuddy:byte-buddy-agent:1.12.10" level="project" />
-    <orderEntry type="library" name="Maven: org.objenesis:objenesis:3.2" level="project" />
-    <orderEntry type="library" name="Maven: com.github.dozermapper:dozer-core:6.5.2" level="project" />
-    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.9.4" level="project" />
-    <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.12.0" level="project" />
-    <orderEntry type="library" name="Maven: commons-io:commons-io:2.5" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.7.36" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.jaxb:jaxb-runtime:3.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.jaxb:jaxb-core:3.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.jaxb:txw2:3.0.2" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.istack:istack-commons-runtime:4.0.1" level="project" />
-    <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.3.1" level="project" />
-    <orderEntry type="library" name="Maven: javax.activation:javax.activation-api:1.2.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.rest-assured:rest-assured:4.5.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.groovy:groovy:3.0.9" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.groovy:groovy-xml:3.0.9" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.httpcomponents:httpclient:4.5.13" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.httpcomponents:httpcore:4.4.15" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: commons-codec:commons-codec:1.15" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.httpcomponents:httpmime:4.5.13" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.ccil.cowan.tagsoup:tagsoup:1.2.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.rest-assured:json-path:4.5.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.groovy:groovy-json:3.0.9" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.rest-assured:rest-assured-common:4.5.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.rest-assured:xml-path:4.5.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.testcontainers:mysql:1.16.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.testcontainers:jdbc:1.16.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.testcontainers:database-commons:1.16.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.testcontainers:testcontainers:1.16.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.13.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:2.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.commons:commons-compress:1.21" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.rnorth.duct-tape:duct-tape:1.0.8" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains:annotations:17.0.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.github.docker-java:docker-java-api:3.2.12" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.github.docker-java:docker-java-transport-zerodep:3.2.12" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.github.docker-java:docker-java-transport:3.2.12" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: net.java.dev.jna:jna:5.8.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.springframework.boot:spring-boot-devtools:3.0.0-M3" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:3.0.0-M3" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:3.0.0-M3" level="project" />
   </component>
 </module>
