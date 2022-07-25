@@ -3,7 +3,7 @@ package com.ratz.restfullapi.unittests.mapper;
 import com.ratz.restfullapi.DTO.v1.PersonDTOv1;
 import com.ratz.restfullapi.mapper.DozerMapper;
 import com.ratz.restfullapi.model.Person;
-import com.ratz.restfullapi.unittests.mapper.mocks.MockPerson;
+import com.ratz.restfullapi.unittests.mocks.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

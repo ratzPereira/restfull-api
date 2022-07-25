@@ -5,7 +5,7 @@ import com.ratz.restfullapi.exceptions.RequiredObjectIsNullException;
 import com.ratz.restfullapi.model.Book;
 import com.ratz.restfullapi.repository.BookRepository;
 import com.ratz.restfullapi.service.impl.BookServiceImpl;
-import com.ratz.restfullapi.unittests.mapper.mocks.MockBook;
+import com.ratz.restfullapi.unittests.mocks.MockBook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

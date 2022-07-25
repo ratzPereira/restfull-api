@@ -5,7 +5,7 @@ import com.ratz.restfullapi.exceptions.RequiredObjectIsNullException;
 import com.ratz.restfullapi.model.Person;
 import com.ratz.restfullapi.repository.PersonRepository;
 import com.ratz.restfullapi.service.impl.PersonServiceImpl;
-import com.ratz.restfullapi.unittests.mapper.mocks.MockPerson;
+import com.ratz.restfullapi.unittests.mocks.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

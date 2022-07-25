@@ -1,4 +1,4 @@
-package com.ratz.restfullapi.unittests.mapper.mocks;
+package com.ratz.restfullapi.unittests.mocks;
 
 import com.ratz.restfullapi.DTO.v1.PersonDTOv1;
 import com.ratz.restfullapi.model.Person;
