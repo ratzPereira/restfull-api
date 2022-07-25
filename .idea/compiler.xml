@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="restfull-api" target="18" />
+      <module name="restfull-api" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

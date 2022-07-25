@@ -1,0 +1,4 @@
+com\ratz\restfullapi\unittests\mapper\mocks\MockPerson.class
+com\ratz\restfullapi\unittests\mapper\DozerConverterTest.class
+com\ratz\restfullapi\RestfullApiApplicationTests.class
+com\ratz\restfullapi\unittests\service\PersonServiceImplTest.class
