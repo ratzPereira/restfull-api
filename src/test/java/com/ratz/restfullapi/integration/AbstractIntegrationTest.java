@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 public class AbstractIntegrationTest {
 
 
-  public class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+  static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0.29");
 
@@ -27,8 +27,8 @@ public class AbstractIntegrationTest {
     private static Map<String, Object> createConnectionConfiguration() {
 
       return Map.of("spring.datasource.url", mysql.getJdbcUrl(),
-          "username", mysql.getUsername(),
-          "password", mysql.getPassword());
+          "spring.datasource.username", mysql.getUsername(),
+          "spring.datasource.password", mysql.getPassword());
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
