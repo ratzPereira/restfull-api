@@ -26,6 +26,7 @@ public class PersonController {
   @Autowired
   private PersonService personService;
 
+  @CrossOrigin(origins = "http://localhost:8080")
   @GetMapping(value = "/{id}", produces = {APPLICATION_JSON, APPLICATION_XML, APPLICATION_YML})
   @Operation(summary = "Find People by ID", description = "Find People by ID",
       tags = {"People"},
@@ -41,6 +42,7 @@ public class PersonController {
     return personService.findById(id);
   }
 
+  @CrossOrigin("http://localhost:8080")
   @GetMapping(produces = {APPLICATION_JSON, APPLICATION_XML, APPLICATION_YML})
   @Operation(summary = "Finds all People", description = "Finds all People",
       tags = {"People"},
@@ -55,6 +57,7 @@ public class PersonController {
     return personService.findAll();
   }
 
+  @CrossOrigin(origins = {"http://localhost:8080", "https://erudio.com.br"})
   @PostMapping(
       produces = {APPLICATION_JSON, APPLICATION_XML, APPLICATION_YML},
       consumes = {APPLICATION_JSON, APPLICATION_XML, APPLICATION_YML})
