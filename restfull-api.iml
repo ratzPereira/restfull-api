@@ -85,6 +85,8 @@
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:6.0.0-M5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-crypto:6.0.0-M5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:6.0.0-M5" level="project" />
+    <orderEntry type="library" name="Maven: com.auth0:java-jwt:3.18.3" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.13.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.hateoas:spring-hateoas:2.0.0-M3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:6.0.0-M4" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:6.0.0-M4" level="project" />
@@ -99,7 +101,6 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.13.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.13.3" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.13.3" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.woodstox:stax2-api:4.2.1" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.woodstox:woodstox-core:6.2.7" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3" level="project" />
