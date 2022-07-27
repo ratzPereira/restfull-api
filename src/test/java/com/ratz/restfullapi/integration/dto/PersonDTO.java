@@ -1,14 +1,11 @@
 package com.ratz.restfullapi.integration.dto;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 
 public class PersonDTO implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = -5452647583822206968L;
-
+  private static final long serialVersionUID = 1L;
 
   private Long id;
   private String firstName;
@@ -58,4 +55,5 @@ public class PersonDTO implements Serializable {
   public void setGender(String gender) {
     this.gender = gender;
   }
+
 }

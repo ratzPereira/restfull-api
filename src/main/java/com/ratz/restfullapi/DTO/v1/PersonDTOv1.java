@@ -32,13 +32,13 @@ public class PersonDTOv1 extends RepresentationModel<PersonDTOv1> implements Ser
   public PersonDTOv1() {
   }
 
-  public PersonDTOv1(Long key, String firstName, String lastName, String address, String gender) {
-    this.key = key;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.address = address;
-    this.gender = gender;
-  }
+//  public PersonDTOv1(Long key, String firstName, String lastName, String address, String gender) {
+//    this.key = key;
+//    this.firstName = firstName;
+//    this.lastName = lastName;
+//    this.address = address;
+//    this.gender = gender;
+//  }
 
   public Long getKey() {
     return key;
