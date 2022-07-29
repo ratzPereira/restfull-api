@@ -7,10 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Tag(name = "Authentication endpoint")
@@ -36,6 +33,28 @@ public class AuthController {
     }
 
     return token;
+  }
+
+
+  @SuppressWarnings("rawtypes")
+  @Operation(summary = "Refresh token authenticated user and return the token")
+  @PutMapping("/refresh/{username}")
+  public ResponseEntity refreshToken(@PathVariable String username, @RequestHeader("Authorization") String refreshToken) {
+
+    if (isDataValid(username, refreshToken))
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid request");
+
+    ResponseEntity token = authService.refreshToken(username, refreshToken);
+
+    if (token == null) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid request");
+    }
+
+    return token;
+  }
+
+  private boolean isDataValid(String username, String refreshToken) {
+    return refreshToken == null || refreshToken.isBlank() || username == null || username.isBlank();
   }
 
 

@@ -27,6 +27,7 @@ public class AuthServiceImpl implements AuthService {
   private UserRepository userRepository;
 
   @Override
+  @SuppressWarnings("rawtypes")
   public ResponseEntity singIn(AccountCredentialsDTO data) {
 
     try {
@@ -52,5 +53,23 @@ public class AuthServiceImpl implements AuthService {
 
       throw new BadCredentialsException("Invalid username or password!");
     }
+  }
+
+  @Override
+  @SuppressWarnings("rawtypes")
+  public ResponseEntity refreshToken(String username, String refreshToken) {
+
+    User user = userRepository.findByUsername(username);
+    TokenDTO tokenDTO = new TokenDTO();
+
+    if (user != null) {
+
+      tokenDTO = tokenProvider.refreshToken(refreshToken);
+    } else {
+
+      throw new UsernameNotFoundException("Invalid username or password!");
+    }
+
+    return ResponseEntity.ok(tokenDTO);
   }
 }

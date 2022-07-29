@@ -6,4 +6,6 @@ import org.springframework.http.ResponseEntity;
 public interface AuthService {
 
   ResponseEntity singIn(AccountCredentialsDTO data);
+
+  ResponseEntity refreshToken(String username, String refreshToken);
 }
