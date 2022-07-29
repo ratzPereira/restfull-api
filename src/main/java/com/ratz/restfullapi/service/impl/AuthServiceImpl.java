@@ -30,28 +30,27 @@ public class AuthServiceImpl implements AuthService {
   public ResponseEntity singIn(AccountCredentialsDTO data) {
 
     try {
-
-      String userName = data.getUsername();
+      String username = data.getUsername();
       String password = data.getPassword();
+      authenticationManager.authenticate(
+          new UsernamePasswordAuthenticationToken(username, password));
 
-      authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName, password));
+      User user = userRepository.findByUsername(username);
 
-      User user = userRepository.findByUsername(userName);
-
-      TokenDTO tokenDTO = new TokenDTO();
-
+      var tokenResponse = new TokenDTO();
       if (user != null) {
 
-        tokenDTO = tokenProvider.createAccessToken(userName, user.getRoles());
+        tokenResponse = tokenProvider.createAccessToken(username, user.getRoles());
       } else {
 
-        throw new UsernameNotFoundException("Username not found");
+        throw new UsernameNotFoundException("Username " + username + " not found!");
       }
-      return ResponseEntity.ok(tokenDTO);
+
+      return ResponseEntity.ok(tokenResponse);
 
     } catch (Exception e) {
 
-      throw new BadCredentialsException("Bad credentials.");
+      throw new BadCredentialsException("Invalid username or password!");
     }
   }
 }

@@ -21,9 +21,10 @@ public class User implements Serializable, UserDetails {
   @Id
   private Long id;
 
-  @Column(unique = true)
+  @Column(name = "user_name", unique = true)
   private String userName;
 
+  @Column(name = "full_name")
   private String fullName;
 
   @Column(nullable = false)
