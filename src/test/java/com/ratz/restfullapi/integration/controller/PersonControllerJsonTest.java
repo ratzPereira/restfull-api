@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ratz.restfullapi.config.TestConfigs;
 import com.ratz.restfullapi.integration.AbstractIntegrationTest;
+import com.ratz.restfullapi.integration.dto.AccountCredentialsDTO;
 import com.ratz.restfullapi.integration.dto.PersonDTO;
+import com.ratz.restfullapi.integration.dto.TokenDTO;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -46,20 +48,39 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
   }
 
   @Test
-  @Order(1)
-  public void testCreate() throws JsonMappingException, JsonProcessingException {
+  @Order(0)
+  public void authorization() throws JsonMappingException, JsonProcessingException {
+
+    AccountCredentialsDTO user = new AccountCredentialsDTO("Ratz", "admin123");
+
+    String accessToken = given()
+        .basePath("/auth/signIn")
+        .port(TestConfigs.SERVER_PORT)
+        .contentType(TestConfigs.CONTENT_TYPE_JSON)
+        .body(user)
+        .when()
+        .post()
+        .then()
+        .statusCode(200)
+        .extract().body().as(TokenDTO.class).getAccessToken();
 
     specification = new RequestSpecBuilder()
-        .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_LOCAL)
+        .addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken)
         .setBasePath("/api/person/v1")
         .setPort(TestConfigs.SERVER_PORT)
         .addFilter(new RequestLoggingFilter(LogDetail.ALL))
         .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
         .build();
+  }
+
+  @Test
+  @Order(1)
+  public void testCreate() throws JsonMappingException, JsonProcessingException {
 
     PersonDTO personDTO = makePersonDTO();
     String content = given().spec(specification)
         .contentType(TestConfigs.CONTENT_TYPE_JSON)
+        .header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_LOCAL)
         .body(personDTO)
         .when()
         .post()
@@ -93,16 +114,9 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
   public void testCreateWithWrongOrigin() throws JsonMappingException, JsonProcessingException {
 
 
-    specification = new RequestSpecBuilder()
-        .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_SEMERU)
-        .setBasePath("/api/person/v1")
-        .setPort(TestConfigs.SERVER_PORT)
-        .addFilter(new RequestLoggingFilter(LogDetail.ALL))
-        .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
-        .build();
-
     String content = given().spec(specification)
         .contentType(TestConfigs.CONTENT_TYPE_JSON)
+        .header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_SEMERU)
         .body(makePersonDTO())
         .when()
         .post()
@@ -120,16 +134,10 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
   @Order(3)
   public void testFindById() throws JsonMappingException, JsonProcessingException {
 
-    specification = new RequestSpecBuilder()
-        .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_LOCAL)
-        .setBasePath("/api/person/v1")
-        .setPort(TestConfigs.SERVER_PORT)
-        .addFilter(new RequestLoggingFilter(LogDetail.ALL))
-        .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
-        .build();
 
     String content = given().spec(specification)
         .contentType(TestConfigs.CONTENT_TYPE_JSON)
+        .header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_LOCAL)
         .pathParam("id", makePersonDTO().getId())
         .when()
         .get("{id}")
@@ -163,16 +171,10 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
   @Order(4)
   public void testFindByIdWithWrongOrigin() {
 
-    specification = new RequestSpecBuilder()
-        .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_SEMERU)
-        .setBasePath("/api/person/v1")
-        .setPort(TestConfigs.SERVER_PORT)
-        .addFilter(new RequestLoggingFilter(LogDetail.ALL))
-        .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
-        .build();
 
     String content = given().spec(specification)
         .contentType(TestConfigs.CONTENT_TYPE_JSON)
+        .header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_SEMERU)
         .pathParam("id", makePersonDTO().getId())
         .when()
         .get("{id}")
