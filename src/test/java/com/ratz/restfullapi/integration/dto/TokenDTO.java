@@ -1,9 +1,12 @@
 package com.ratz.restfullapi.integration.dto;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
+@XmlRootElement
 public class TokenDTO implements Serializable {
   @Serial
   private static final long serialVersionUID = -4309830824311976270L;

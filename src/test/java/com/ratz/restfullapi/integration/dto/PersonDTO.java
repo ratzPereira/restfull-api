@@ -1,8 +1,10 @@
 package com.ratz.restfullapi.integration.dto;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.io.Serializable;
 
-
+@XmlRootElement
 public class PersonDTO implements Serializable {
 
   private static final long serialVersionUID = 1L;

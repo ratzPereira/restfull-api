@@ -59,17 +59,14 @@ public class AuthServiceImpl implements AuthService {
   @SuppressWarnings("rawtypes")
   public ResponseEntity refreshToken(String username, String refreshToken) {
 
-    User user = userRepository.findByUsername(username);
-    TokenDTO tokenDTO = new TokenDTO();
+    var user = userRepository.findByUsername(username);
 
+    var tokenResponse = new TokenDTO();
     if (user != null) {
-
-      tokenDTO = tokenProvider.refreshToken(refreshToken);
+      tokenResponse = tokenProvider.refreshToken(refreshToken);
     } else {
-
-      throw new UsernameNotFoundException("Invalid username or password!");
+      throw new UsernameNotFoundException("Username " + username + " not found!");
     }
-
-    return ResponseEntity.ok(tokenDTO);
+    return ResponseEntity.ok(tokenResponse);
   }
 }

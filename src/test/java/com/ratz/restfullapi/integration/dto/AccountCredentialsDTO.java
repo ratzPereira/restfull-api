@@ -1,8 +1,11 @@
 package com.ratz.restfullapi.integration.dto;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.io.Serial;
 import java.io.Serializable;
 
+@XmlRootElement
 public class AccountCredentialsDTO implements Serializable {
 
   @Serial
@@ -15,6 +18,9 @@ public class AccountCredentialsDTO implements Serializable {
   public AccountCredentialsDTO(String username, String password) {
     this.username = username;
     this.password = password;
+  }
+
+  public AccountCredentialsDTO() {
   }
 
   public String getUsername() {
