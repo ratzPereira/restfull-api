@@ -1,4 +1,4 @@
-package com.ratz.restfullapi.integration.controller;
+package com.ratz.restfullapi.integration.controller.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
