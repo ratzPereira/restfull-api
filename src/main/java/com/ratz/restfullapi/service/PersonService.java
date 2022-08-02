@@ -11,6 +11,8 @@ public interface PersonService {
 
   PagedModel<EntityModel<PersonDTOv1>> findAll(Pageable pageable);
 
+  PagedModel<EntityModel<PersonDTOv1>> findPersonsByName(String firstName, Pageable pageable);
+
   PersonDTOv1 createPerson(PersonDTOv1 person);
 
   void deletePerson(String id);

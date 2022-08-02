@@ -11,6 +11,7 @@ import com.ratz.restfullapi.model.Person;
 import com.ratz.restfullapi.repository.PersonRepository;
 import com.ratz.restfullapi.service.PersonService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class PersonServiceImpl implements PersonService {
 
   private static final Logger LOG = LoggerFactory.getLogger(PersonServiceImpl.class.getSimpleName());
+
   @Autowired
   PagedResourcesAssembler<PersonDTOv1> assembler;
+
   @Autowired
   private PersonRepository personRepository;
+
   @Autowired
   private PersonMapper personMapper;
 
@@ -52,15 +56,18 @@ public class PersonServiceImpl implements PersonService {
 
     Page<Person> people = personRepository.findAll(pageable);
 
-    Page<PersonDTOv1> personDTOPage = people.map(p -> DozerMapper.parseObejct(p, PersonDTOv1.class));
-
-    personDTOPage.map(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
-
-    Link link = linkTo(methodOn(PersonController.class)
-        .findAll(pageable.getPageNumber(), pageable.getPageSize(), "asc")).withSelfRel();
-
-    return assembler.toModel(personDTOPage, link);
+    return getEntityModels(pageable, people);
   }
+
+
+  @Override
+  public PagedModel<EntityModel<PersonDTOv1>> findPersonsByName(String firstName, Pageable pageable) {
+
+    Page<Person> people = personRepository.findPersonsByName(firstName, pageable);
+
+    return getEntityModels(pageable, people);
+  }
+
 
   @Override
   public PersonDTOv1 createPerson(PersonDTOv1 person) {
@@ -117,6 +124,18 @@ public class PersonServiceImpl implements PersonService {
     PersonDTOv1 personDTOv1 = DozerMapper.parseObejct(person, PersonDTOv1.class);
     personDTOv1.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
     return personDTOv1;
+  }
+
+  @NotNull
+  private PagedModel<EntityModel<PersonDTOv1>> getEntityModels(Pageable pageable, Page<Person> people) {
+    Page<PersonDTOv1> personDTOPage = people.map(p -> DozerMapper.parseObejct(p, PersonDTOv1.class));
+
+    personDTOPage.map(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+
+    Link link = linkTo(methodOn(PersonController.class)
+        .findAll(pageable.getPageNumber(), pageable.getPageSize(), "asc")).withSelfRel();
+
+    return assembler.toModel(personDTOPage, link);
   }
 
   @Override
