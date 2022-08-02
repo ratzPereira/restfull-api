@@ -18,6 +18,8 @@ public class TokenDTO implements Serializable {
   private String accessToken;
   private String refreshToken;
 
+  public TokenDTO() {
+  }
 
   public TokenDTO(String username, Boolean authenticated, Date created, Date expiration, String accessToken, String refreshToken) {
     this.username = username;
@@ -28,8 +30,6 @@ public class TokenDTO implements Serializable {
     this.refreshToken = refreshToken;
   }
 
-  public TokenDTO() {
-  }
 
   public String getUsername() {
     return username;

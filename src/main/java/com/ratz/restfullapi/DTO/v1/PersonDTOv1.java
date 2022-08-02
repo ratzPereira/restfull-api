@@ -29,6 +29,8 @@ public class PersonDTOv1 extends RepresentationModel<PersonDTOv1> implements Ser
   //@JsonIgnore
   private String gender;
 
+  private Boolean enabled;
+
   public PersonDTOv1() {
   }
 
@@ -39,6 +41,15 @@ public class PersonDTOv1 extends RepresentationModel<PersonDTOv1> implements Ser
 //    this.address = address;
 //    this.gender = gender;
 //  }
+
+
+  public Boolean getEnabled() {
+    return enabled;
+  }
+
+  public void setEnabled(Boolean enabled) {
+    this.enabled = enabled;
+  }
 
   public Long getKey() {
     return key;

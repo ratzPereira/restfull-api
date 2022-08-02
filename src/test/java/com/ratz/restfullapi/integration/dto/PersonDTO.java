@@ -11,6 +11,7 @@ public class PersonDTO implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private Long id;
+
   @JsonProperty("first_name")
   private String firstName;
 
@@ -18,8 +19,17 @@ public class PersonDTO implements Serializable {
   private String lastName;
   private String address;
   private String gender;
+  private Boolean enabled;
 
   public PersonDTO() {
+  }
+
+  public Boolean getEnabled() {
+    return enabled;
+  }
+
+  public void setEnabled(Boolean enabled) {
+    this.enabled = enabled;
   }
 
   public Long getId() {

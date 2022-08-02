@@ -22,6 +22,7 @@ public class Person implements Serializable {
   private String lastName;
   private String address;
   private String gender;
+  private Boolean enabled;
 
   public Person() {
   }
@@ -72,5 +73,13 @@ public class Person implements Serializable {
 
   public void setGender(String gender) {
     this.gender = gender;
+  }
+
+  public Boolean getEnabled() {
+    return enabled;
+  }
+
+  public void setEnabled(Boolean enabled) {
+    this.enabled = enabled;
   }
 }

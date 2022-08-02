@@ -10,6 +10,7 @@ import com.ratz.restfullapi.mapper.custom.PersonMapper;
 import com.ratz.restfullapi.model.Person;
 import com.ratz.restfullapi.repository.PersonRepository;
 import com.ratz.restfullapi.service.PersonService;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +94,20 @@ public class PersonServiceImpl implements PersonService {
     PersonDTOv1 dto = DozerMapper.parseObejct(personRepository.save(personToSave), PersonDTOv1.class);
     dto.add(linkTo(methodOn(PersonController.class).findById(dto.getKey())).withSelfRel());
     return dto;
+  }
+
+  @Override
+  @Transactional
+  public PersonDTOv1 disablePerson(Long id) {
+
+    personRepository.disablePerson(id);
+
+    Person person = personRepository.findById(Long.valueOf(id))
+        .orElseThrow(() -> new ResourceNotFoundException("Person with this ID not Found"));
+
+    PersonDTOv1 personDTOv1 = DozerMapper.parseObejct(person, PersonDTOv1.class);
+    personDTOv1.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+    return personDTOv1;
   }
 
   @Override

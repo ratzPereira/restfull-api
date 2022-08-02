@@ -17,4 +17,6 @@ public interface PersonService {
   PersonDTOv1 updatePerson(PersonDTOv1 person);
 
   PersonDTOv2 createPersonV2(PersonDTOv2 person);
+
+  PersonDTOv1 disablePerson(Long id);
 }
