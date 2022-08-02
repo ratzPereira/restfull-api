@@ -14,9 +14,9 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -44,13 +44,16 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  public List<PersonDTOv1> findAll() {
+  public Page<PersonDTOv1> findAll(Pageable pageable) {
 
-    List<Person> personList = personRepository.findAll();
+    Page<Person> people = personRepository.findAll(pageable);
 
-    List<PersonDTOv1> personDTOv1s = DozerMapper.parseListObejct(personList, PersonDTOv1.class);
-    personDTOv1s.stream().forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
-    return personDTOv1s;
+    Page<PersonDTOv1> personDTOPage = people.map(p -> DozerMapper.parseObejct(p, PersonDTOv1.class));
+
+    personDTOPage.map(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+
+
+    return personDTOPage;
   }
 
   @Override
