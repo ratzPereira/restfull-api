@@ -16,6 +16,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -25,10 +29,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class PersonServiceImpl implements PersonService {
 
   private static final Logger LOG = LoggerFactory.getLogger(PersonServiceImpl.class.getSimpleName());
-
+  @Autowired
+  PagedResourcesAssembler<PersonDTOv1> assembler;
   @Autowired
   private PersonRepository personRepository;
-
   @Autowired
   private PersonMapper personMapper;
 
@@ -44,7 +48,7 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  public Page<PersonDTOv1> findAll(Pageable pageable) {
+  public PagedModel<EntityModel<PersonDTOv1>> findAll(Pageable pageable) {
 
     Page<Person> people = personRepository.findAll(pageable);
 
@@ -52,8 +56,10 @@ public class PersonServiceImpl implements PersonService {
 
     personDTOPage.map(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
 
+    Link link = linkTo(methodOn(PersonController.class)
+        .findAll(pageable.getPageNumber(), pageable.getPageSize(), "asc")).withSelfRel();
 
-    return personDTOPage;
+    return assembler.toModel(personDTOPage, link);
   }
 
   @Override
