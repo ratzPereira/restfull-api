@@ -26,3 +26,9 @@ security:
     token:
       secret-key: secretkey
       expire-length: 3600000
+
+flyway:
+  url: jdbc:mysql://localhost:3306/
+  schemas: rest_with_spring_boot_udemy
+  user: root
+  password: root

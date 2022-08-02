@@ -113,6 +113,28 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <configuration>
+                    <url>jdbc:mysql://localhost:3306/restfull_api?useTimezone=true&amp;serverTimezone=UTC&amp;useSSL=false</url>
+                    <user>root</user>
+                    <password>root</password>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>${mysql.version}</version>
+                        <exclusions>
+                            <exclusion>
+                                <artifactId>slf4j-api</artifactId>
+                                <groupId>org.slf4j</groupId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>

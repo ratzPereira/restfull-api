@@ -1,42 +1,47 @@
-package com.ratz.restfullapi.integration.controller.xml;
+package com.ratz.restfullapi.integration.controller.yml;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.ratz.restfullapi.DTO.v1.security.TokenDTO;
 import com.ratz.restfullapi.config.TestConfigs;
 import com.ratz.restfullapi.integration.AbstractIntegrationTest;
+import com.ratz.restfullapi.integration.controller.yml.mapper.YmlMapper;
 import com.ratz.restfullapi.integration.dto.AccountCredentialsDTO;
 import com.ratz.restfullapi.integration.dto.PersonDTO;
+import com.ratz.restfullapi.integration.dto.TokenDTO;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.config.EncoderConfig;
+import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
+import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class PersonControllerXmlTest extends AbstractIntegrationTest {
+@TestMethodOrder(OrderAnnotation.class)
+public class PersonControllerYamlTest extends AbstractIntegrationTest {
 
   private static RequestSpecification specification;
-  private static XmlMapper objectMapper;
+  private static YmlMapper objectMapper;
 
   private static PersonDTO person;
 
   @BeforeAll
   public static void setup() {
-    objectMapper = new XmlMapper();
-    objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-
+    objectMapper = new YmlMapper();
     person = new PersonDTO();
   }
 
@@ -47,18 +52,25 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
     AccountCredentialsDTO user = new AccountCredentialsDTO("Ratz", "admin123");
 
     var accessToken = given()
+        .config(
+            RestAssuredConfig
+                .config()
+                .encoderConfig(EncoderConfig.encoderConfig()
+                    .encodeContentTypeAs(
+                        TestConfigs.CONTENT_TYPE_YML,
+                        ContentType.TEXT)))
         .basePath("/auth/signIn")
         .port(TestConfigs.SERVER_PORT)
-        .contentType(TestConfigs.CONTENT_TYPE_XML)
-        .accept(TestConfigs.CONTENT_TYPE_XML)
-        .body(user)
+        .contentType(TestConfigs.CONTENT_TYPE_YML)
+        .accept(TestConfigs.CONTENT_TYPE_YML)
+        .body(user, objectMapper)
         .when()
         .post()
         .then()
         .statusCode(200)
         .extract()
         .body()
-        .as(TokenDTO.class)
+        .as(TokenDTO.class, objectMapper)
         .getAccessToken();
 
     specification = new RequestSpecBuilder()
@@ -75,19 +87,25 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
   public void testCreate() throws JsonMappingException, JsonProcessingException {
     mockPerson();
 
-    var content = given().spec(specification)
-        .contentType(TestConfigs.CONTENT_TYPE_XML)
-        .accept(TestConfigs.CONTENT_TYPE_XML)
-        .body(person)
+    var persistedPerson = given().spec(specification)
+        .config(
+            RestAssuredConfig
+                .config()
+                .encoderConfig(EncoderConfig.encoderConfig()
+                    .encodeContentTypeAs(
+                        TestConfigs.CONTENT_TYPE_YML,
+                        ContentType.TEXT)))
+        .contentType(TestConfigs.CONTENT_TYPE_YML)
+        .accept(TestConfigs.CONTENT_TYPE_YML)
+        .body(person, objectMapper)
         .when()
         .post()
         .then()
         .statusCode(200)
         .extract()
         .body()
-        .asString();
+        .as(PersonDTO.class, objectMapper);
 
-    PersonDTO persistedPerson = objectMapper.readValue(content, PersonDTO.class);
     person = persistedPerson;
 
     assertNotNull(persistedPerson);
@@ -98,10 +116,11 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
     assertNotNull(persistedPerson.getAddress());
     assertNotNull(persistedPerson.getGender());
 
+    assertTrue(persistedPerson.getEnabled());
     assertTrue(persistedPerson.getId() > 0);
 
-    //assertEquals("Nelson", persistedPerson.getFirstName());
-    //assertEquals("Piquet", persistedPerson.getLastName());
+    assertEquals("Nelson", persistedPerson.getFirstName());
+    assertEquals("Piquet", persistedPerson.getLastName());
     assertEquals("Brasília - DF - Brasil", persistedPerson.getAddress());
     assertEquals("Male", persistedPerson.getGender());
   }
@@ -111,19 +130,25 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
   public void testUpdate() throws JsonMappingException, JsonProcessingException {
     person.setLastName("Piquet Souto Maior");
 
-    var content = given().spec(specification)
-        .contentType(TestConfigs.CONTENT_TYPE_XML)
-        .accept(TestConfigs.CONTENT_TYPE_XML)
-        .body(person)
+    var persistedPerson = given().spec(specification)
+        .config(
+            RestAssuredConfig
+                .config()
+                .encoderConfig(EncoderConfig.encoderConfig()
+                    .encodeContentTypeAs(
+                        TestConfigs.CONTENT_TYPE_YML,
+                        ContentType.TEXT)))
+        .contentType(TestConfigs.CONTENT_TYPE_YML)
+        .accept(TestConfigs.CONTENT_TYPE_YML)
+        .body(person, objectMapper)
         .when()
         .post()
         .then()
         .statusCode(200)
         .extract()
         .body()
-        .asString();
+        .as(PersonDTO.class, objectMapper);
 
-    PersonDTO persistedPerson = objectMapper.readValue(content, PersonDTO.class);
     person = persistedPerson;
 
     assertNotNull(persistedPerson);
@@ -134,10 +159,54 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
     assertNotNull(persistedPerson.getAddress());
     assertNotNull(persistedPerson.getGender());
 
+    assertTrue(persistedPerson.getEnabled());
     assertEquals(person.getId(), persistedPerson.getId());
 
-    //assertEquals("Nelson", persistedPerson.getFirstName());
-    //assertEquals("Piquet Souto Maior", persistedPerson.getLastName());
+    assertEquals("Nelson", persistedPerson.getFirstName());
+    assertEquals("Piquet Souto Maior", persistedPerson.getLastName());
+    assertEquals("Brasília - DF - Brasil", persistedPerson.getAddress());
+    assertEquals("Male", persistedPerson.getGender());
+  }
+
+
+  @Test
+  @Order(3)
+  public void testDisablePersonById() throws JsonMappingException, JsonProcessingException {
+
+    var persistedPerson = given().spec(specification)
+        .config(
+            RestAssuredConfig
+                .config()
+                .encoderConfig(EncoderConfig.encoderConfig()
+                    .encodeContentTypeAs(
+                        TestConfigs.CONTENT_TYPE_YML,
+                        ContentType.TEXT)))
+        .contentType(TestConfigs.CONTENT_TYPE_YML)
+        .accept(TestConfigs.CONTENT_TYPE_YML)
+        .pathParam("id", person.getId())
+        .when()
+        .patch("{id}")
+        .then()
+        .statusCode(200)
+        .extract()
+        .body()
+        .as(PersonDTO.class, objectMapper);
+
+    person = persistedPerson;
+
+    assertNotNull(persistedPerson);
+
+    assertNotNull(persistedPerson.getId());
+    assertNotNull(persistedPerson.getFirstName());
+    assertNotNull(persistedPerson.getLastName());
+    assertNotNull(persistedPerson.getAddress());
+    assertNotNull(persistedPerson.getGender());
+    assertFalse(persistedPerson.getEnabled());
+
+    assertEquals(person.getId(), persistedPerson.getId());
+
+    assertEquals("Nelson", persistedPerson.getFirstName());
+    assertEquals("Piquet Souto Maior", persistedPerson.getLastName());
     assertEquals("Brasília - DF - Brasil", persistedPerson.getAddress());
     assertEquals("Male", persistedPerson.getGender());
   }
@@ -147,9 +216,16 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
   public void testFindById() throws JsonMappingException, JsonProcessingException {
     mockPerson();
 
-    var content = given().spec(specification)
-        .contentType(TestConfigs.CONTENT_TYPE_XML)
-        .accept(TestConfigs.CONTENT_TYPE_XML)
+    var persistedPerson = given().spec(specification)
+        .config(
+            RestAssuredConfig
+                .config()
+                .encoderConfig(EncoderConfig.encoderConfig()
+                    .encodeContentTypeAs(
+                        TestConfigs.CONTENT_TYPE_YML,
+                        ContentType.TEXT)))
+        .contentType(TestConfigs.CONTENT_TYPE_YML)
+        .accept(TestConfigs.CONTENT_TYPE_YML)
         .pathParam("id", person.getId())
         .when()
         .get("{id}")
@@ -157,9 +233,8 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
         .statusCode(200)
         .extract()
         .body()
-        .asString();
+        .as(PersonDTO.class, objectMapper);
 
-    PersonDTO persistedPerson = objectMapper.readValue(content, PersonDTO.class);
     person = persistedPerson;
 
     assertNotNull(persistedPerson);
@@ -170,10 +245,12 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
     assertNotNull(persistedPerson.getAddress());
     assertNotNull(persistedPerson.getGender());
 
+    assertFalse(persistedPerson.getEnabled());
+
     assertEquals(person.getId(), persistedPerson.getId());
 
-//    assertEquals("Joao", persistedPerson.getFirstName());
-    //   assertEquals("Pereira", persistedPerson.getLastName());
+    assertEquals("Nelson", persistedPerson.getFirstName());
+    assertEquals("Piquet Souto Maior", persistedPerson.getLastName());
     assertEquals("Brasília - DF - Brasil", persistedPerson.getAddress());
     assertEquals("Male", persistedPerson.getGender());
   }
@@ -183,8 +260,15 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
   public void testDelete() throws JsonMappingException, JsonProcessingException {
 
     given().spec(specification)
-        .contentType(TestConfigs.CONTENT_TYPE_XML)
-        .accept(TestConfigs.CONTENT_TYPE_XML)
+        .config(
+            RestAssuredConfig
+                .config()
+                .encoderConfig(EncoderConfig.encoderConfig()
+                    .encodeContentTypeAs(
+                        TestConfigs.CONTENT_TYPE_YML,
+                        ContentType.TEXT)))
+        .contentType(TestConfigs.CONTENT_TYPE_YML)
+        .accept(TestConfigs.CONTENT_TYPE_YML)
         .pathParam("id", person.getId())
         .when()
         .delete("{id}")
@@ -197,18 +281,24 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
   public void testFindAll() throws JsonMappingException, JsonProcessingException {
 
     var content = given().spec(specification)
-        .contentType(TestConfigs.CONTENT_TYPE_XML)
-        .accept(TestConfigs.CONTENT_TYPE_XML)
+        .config(
+            RestAssuredConfig
+                .config()
+                .encoderConfig(EncoderConfig.encoderConfig()
+                    .encodeContentTypeAs(
+                        TestConfigs.CONTENT_TYPE_YML,
+                        ContentType.TEXT)))
+        .contentType(TestConfigs.CONTENT_TYPE_YML)
+        .accept(TestConfigs.CONTENT_TYPE_YML)
         .when()
         .get()
         .then()
         .statusCode(200)
         .extract()
         .body()
-        .asString();
+        .as(PersonDTO[].class, objectMapper);
 
-    List<PersonDTO> people = objectMapper.readValue(content, new TypeReference<List<PersonDTO>>() {
-    });
+    List<PersonDTO> people = Arrays.asList(content);
 
     PersonDTO foundPersonOne = people.get(0);
 
@@ -217,6 +307,7 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
     assertNotNull(foundPersonOne.getLastName());
     assertNotNull(foundPersonOne.getAddress());
     assertNotNull(foundPersonOne.getGender());
+    assertTrue(foundPersonOne.getEnabled());
 
     assertEquals(3, foundPersonOne.getId());
 
@@ -254,48 +345,19 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
         .build();
 
     given().spec(specificationWithoutToken)
-        .contentType(TestConfigs.CONTENT_TYPE_XML)
-        .accept(TestConfigs.CONTENT_TYPE_XML)
+        .config(
+            RestAssuredConfig
+                .config()
+                .encoderConfig(EncoderConfig.encoderConfig()
+                    .encodeContentTypeAs(
+                        TestConfigs.CONTENT_TYPE_YML,
+                        ContentType.TEXT)))
+        .contentType(TestConfigs.CONTENT_TYPE_YML)
+        .accept(TestConfigs.CONTENT_TYPE_YML)
         .when()
         .get()
         .then()
         .statusCode(403);
-  }
-
-  @Test
-  @Order(3)
-  public void testDisablePersonById() throws JsonMappingException, JsonProcessingException {
-
-    var content = given().spec(specification)
-        .contentType(TestConfigs.CONTENT_TYPE_XML)
-        .accept(TestConfigs.CONTENT_TYPE_XML)
-        .pathParam("id", person.getId())
-        .when()
-        .patch("{id}")
-        .then()
-        .statusCode(200)
-        .extract()
-        .body()
-        .asString();
-
-    PersonDTO persistedPerson = objectMapper.readValue(content, PersonDTO.class);
-    person = persistedPerson;
-
-    assertNotNull(persistedPerson);
-
-    assertNotNull(persistedPerson.getId());
-    assertNotNull(persistedPerson.getFirstName());
-    assertNotNull(persistedPerson.getLastName());
-    assertNotNull(persistedPerson.getAddress());
-    assertNotNull(persistedPerson.getGender());
-    assertFalse(persistedPerson.getEnabled());
-
-    assertEquals(person.getId(), persistedPerson.getId());
-
-//    assertEquals("Joaozinho", persistedPerson.getFirstName());
-    //   assertEquals("Pereira", persistedPerson.getLastName());
-    assertEquals("Brasília - DF - Brasil", persistedPerson.getAddress());
-    assertEquals("Male", persistedPerson.getGender());
   }
 
   private void mockPerson() {
