@@ -106,6 +106,7 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.30" level="project" />
     <orderEntry type="library" name="Maven: io.swagger.core.v3:swagger-models:2.2.1" level="project" />
+    <orderEntry type="library" name="Maven: io.swagger.core.v3:swagger-annotations:2.2.1" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.29" level="project" />
     <orderEntry type="library" name="Maven: org.flywaydb:flyway-core:8.5.11" level="project" />
     <orderEntry type="library" name="Maven: org.flywaydb:flyway-mysql:8.5.11" level="project" />

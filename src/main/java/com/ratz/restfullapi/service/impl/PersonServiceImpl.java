@@ -11,7 +11,6 @@ import com.ratz.restfullapi.model.Person;
 import com.ratz.restfullapi.repository.PersonRepository;
 import com.ratz.restfullapi.service.PersonService;
 import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,7 +125,6 @@ public class PersonServiceImpl implements PersonService {
     return personDTOv1;
   }
 
-  @NotNull
   private PagedModel<EntityModel<PersonDTOv1>> getEntityModels(Pageable pageable, Page<Person> people) {
     Page<PersonDTOv1> personDTOPage = people.map(p -> DozerMapper.parseObejct(p, PersonDTOv1.class));
 
