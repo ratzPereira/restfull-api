@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "file",
+      "type": "com.ratz.restfullapi.config.FileStorageConfig",
+      "sourceType": "com.ratz.restfullapi.config.FileStorageConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "file.upload-dir",
+      "type": "java.lang.String",
+      "sourceType": "com.ratz.restfullapi.config.FileStorageConfig"
+    }
+  ],
+  "hints": []
+}

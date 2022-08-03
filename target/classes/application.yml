@@ -11,6 +11,15 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: false
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
+
+file:
+  upload-dir: /Users/JoãoCarlosPereira/Documents/uploads
 
 spring-doc:
   paths-to-match:
@@ -32,3 +41,5 @@ flyway:
   schemas: rest_with_spring_boot_udemy
   user: root
   password: root
+server:
+  port: 80

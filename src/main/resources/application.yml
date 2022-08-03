@@ -41,3 +41,5 @@ flyway:
   schemas: rest_with_spring_boot_udemy
   user: root
   password: root
+server:
+  port: 80
