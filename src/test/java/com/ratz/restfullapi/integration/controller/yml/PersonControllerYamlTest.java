@@ -6,9 +6,9 @@ import com.ratz.restfullapi.config.TestConfigs;
 import com.ratz.restfullapi.integration.AbstractIntegrationTest;
 import com.ratz.restfullapi.integration.controller.yml.mapper.YmlMapper;
 import com.ratz.restfullapi.integration.dto.AccountCredentialsDTO;
+import com.ratz.restfullapi.integration.dto.PagedModelPerson;
 import com.ratz.restfullapi.integration.dto.PersonDTO;
 import com.ratz.restfullapi.integration.dto.TokenDTO;
-import com.ratz.restfullapi.integration.dto.wrapper.WrapperPersonDTO;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -290,16 +290,17 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
                         ContentType.TEXT)))
         .contentType(TestConfigs.CONTENT_TYPE_YML)
         .accept(TestConfigs.CONTENT_TYPE_YML)
+        .queryParams("page", 3, "size", 10, "direction", "asc")
         .when()
         .get()
         .then()
         .statusCode(200)
         .extract()
         .body()
-        .as(WrapperPersonDTO.class, objectMapper);
+        .as(PagedModelPerson.class, objectMapper);
 
 
-    List<PersonDTO> people = wrapper.getEmbedded().getPersons();
+    List<PersonDTO> people = wrapper.getContent();
 
     PersonDTO foundPersonOne = people.get(0);
 
@@ -308,14 +309,13 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
     assertNotNull(foundPersonOne.getLastName());
     assertNotNull(foundPersonOne.getAddress());
     assertNotNull(foundPersonOne.getGender());
-    assertTrue(foundPersonOne.getEnabled());
 
-    assertEquals(3, foundPersonOne.getId());
+    assertEquals(837, foundPersonOne.getId());
 
-    assertEquals("Joao", foundPersonOne.getFirstName());
-    assertEquals("Pereira", foundPersonOne.getLastName());
-    assertEquals("Nao sei", foundPersonOne.getAddress());
-    assertEquals("Male", foundPersonOne.getGender());
+    assertEquals("Amalee", foundPersonOne.getFirstName());
+    assertEquals("Jentgens", foundPersonOne.getLastName());
+    assertEquals("Cachachi", foundPersonOne.getAddress());
+    assertEquals("Female", foundPersonOne.getGender());
 
     PersonDTO foundPersonSix = people.get(3);
 
@@ -325,12 +325,12 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
     assertNotNull(foundPersonSix.getAddress());
     assertNotNull(foundPersonSix.getGender());
 
-    assertEquals(6, foundPersonSix.getId());
+    assertEquals(378, foundPersonSix.getId());
 
-    assertEquals("Joao", foundPersonOne.getFirstName());
-    assertEquals("Pereira", foundPersonOne.getLastName());
-    assertEquals("Nao sei", foundPersonOne.getAddress());
-    assertEquals("Male", foundPersonOne.getGender());
+    assertEquals("Ame", foundPersonSix.getFirstName());
+    assertEquals("Bebbington", foundPersonSix.getLastName());
+    assertEquals("Valenciennes", foundPersonSix.getAddress());
+    assertEquals("Polygender", foundPersonSix.getGender());
   }
 
 
