@@ -1,7 +1,6 @@
 package com.ratz.restfullapi.integration.controller.xml;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -10,6 +9,7 @@ import com.ratz.restfullapi.config.TestConfigs;
 import com.ratz.restfullapi.integration.AbstractIntegrationTest;
 import com.ratz.restfullapi.integration.dto.AccountCredentialsDTO;
 import com.ratz.restfullapi.integration.dto.PersonDTO;
+import com.ratz.restfullapi.integration.dto.wrapper.WrapperPersonDTO;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -207,8 +207,8 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
         .body()
         .asString();
 
-    List<PersonDTO> people = objectMapper.readValue(content, new TypeReference<List<PersonDTO>>() {
-    });
+    WrapperPersonDTO wrapper = objectMapper.readValue(content, WrapperPersonDTO.class);
+    List<PersonDTO> people = wrapper.getEmbedded().getPersons();
 
     PersonDTO foundPersonOne = people.get(0);
 

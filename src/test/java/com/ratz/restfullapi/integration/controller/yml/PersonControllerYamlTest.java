@@ -8,6 +8,7 @@ import com.ratz.restfullapi.integration.controller.yml.mapper.YmlMapper;
 import com.ratz.restfullapi.integration.dto.AccountCredentialsDTO;
 import com.ratz.restfullapi.integration.dto.PersonDTO;
 import com.ratz.restfullapi.integration.dto.TokenDTO;
+import com.ratz.restfullapi.integration.dto.wrapper.WrapperPersonDTO;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -23,7 +24,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -280,7 +280,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
   @Order(6)
   public void testFindAll() throws JsonMappingException, JsonProcessingException {
 
-    var content = given().spec(specification)
+    var wrapper = given().spec(specification)
         .config(
             RestAssuredConfig
                 .config()
@@ -296,9 +296,10 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
         .statusCode(200)
         .extract()
         .body()
-        .as(PersonDTO[].class, objectMapper);
+        .as(WrapperPersonDTO.class, objectMapper);
 
-    List<PersonDTO> people = Arrays.asList(content);
+
+    List<PersonDTO> people = wrapper.getEmbedded().getPersons();
 
     PersonDTO foundPersonOne = people.get(0);
 
