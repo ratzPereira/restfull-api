@@ -26,7 +26,7 @@ jobs:
         cache: maven
     - name: Build application jar
       working-directory: ./
-      run: mvn clean package -DSkipTests
+      run: mvn clean package -DskipTests
       
     - name: Docker Compose Build
       working-directory: ./
