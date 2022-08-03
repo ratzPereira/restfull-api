@@ -361,6 +361,43 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
         .statusCode(403);
   }
 
+  @Test
+  @Order(8)
+  public void testFindPersonsByName() throws JsonMappingException, JsonProcessingException {
+
+    var wrapper = given().spec(specification)
+        .config(
+            RestAssuredConfig
+                .config()
+                .encoderConfig(EncoderConfig.encoderConfig()
+                    .encodeContentTypeAs(
+                        TestConfigs.CONTENT_TYPE_YML,
+                        ContentType.TEXT)))
+        .contentType(TestConfigs.CONTENT_TYPE_YML)
+        .accept(TestConfigs.CONTENT_TYPE_YML)
+        .pathParam("firstName", "bekk")
+        .queryParams("page", 0, "size", 6, "direction", "asc")
+        .when()
+        .get("/findPersonsByName/{firstName}")
+        .then()
+        .statusCode(200)
+        .extract()
+        .body()
+        .as(PagedModelPerson.class, objectMapper);
+
+
+    List<PersonDTO> people = wrapper.getContent();
+
+    PersonDTO foundPersonOne = people.get(0);
+
+    assertEquals(754, foundPersonOne.getId());
+
+    assertEquals("Bekki", foundPersonOne.getFirstName());
+    assertEquals("Hollingshead", foundPersonOne.getLastName());
+    assertEquals("Seremban", foundPersonOne.getAddress());
+    assertEquals("Female", foundPersonOne.getGender());
+  }
+
   private void mockPerson() {
     person.setId(1L);
     person.setFirstName("Nelson");
