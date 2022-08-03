@@ -21,7 +21,6 @@ services:
   restfull_api:
     image: ratzcom/restfull_api
     restart: always
-    build: ./
     working_dir: /
     environment:
       TZ: America/Sao_Paulo
