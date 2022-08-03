@@ -33,5 +33,6 @@ jobs:
       
     - name: Push to docker hub
       run: |
-        docker tag ${{ secrets.DOCKER_USERNAME }}/restfull_api:latest ${{ secrets.DOCKER_USERNAME }}/restfull_api:${{ github.run_id }}
+        docker tag ${{ secrets.DOCKER_USERNAME }}/restfull_api:0.0.1-SNAPSHOT ${{ secrets.DOCKER_USERNAME }}/restfull_api:${{ github.run_id }}
         docker push ${{ secrets.DOCKER_USERNAME }}/restfull_api:${{ github.run_id }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/restfull_api:0.0.1-SNAPSHOT
