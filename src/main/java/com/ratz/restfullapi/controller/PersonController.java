@@ -22,7 +22,7 @@ import static com.ratz.restfullapi.utils.MediaTypeUtils.*;
 
 
 @RestController
-@RequestMapping("/api/person/v1")
+@RequestMapping("/api/persons/v1")
 @Tag(name = "People", description = "Endpoints to Managing People!")
 public class PersonController {
 
