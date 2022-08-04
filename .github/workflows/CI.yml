@@ -40,18 +40,15 @@ jobs:
     - name: Build application jar
       working-directory: .
       run: mvn clean package -DskipTests
-      
-    - name: Docker Compose Build
-      working-directory: .
-      run: docker compose build
 
-    - name: Tag, and push image to Amazon ECR
+    - name: Build, tag, and push image to Amazon ECR
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: ${{ secret.ECR_REPOSITORY }}
+        IMAGE_TAG: ${{ github.run_id }}
       run: |
-        docker tag ${{ secrets.DOCKER_USERNAME }}/restfull_api:latest ${{ secrets.IMAGE_REPO_URL }}:${{ github.run_id }}
-        docker tag ${{ secrets.DOCKER_USERNAME }}/restfull_api:latest ${{ secrets.IMAGE_REPO_URL }}:latest
-
-        docker push ${{ secrets.IMAGE_REPO_URL }}:${{ github.run_id }}
-        docker push ${{ secrets.IMAGE_REPO_URL }}:latest
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
     - name: Download task definition
       run: |
