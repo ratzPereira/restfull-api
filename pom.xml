@@ -58,6 +58,8 @@
         <!--            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>-->
         <!--            &lt;!&ndash;            <version>${springdoc.version}</version>&ndash;&gt;-->
         <!--        </dependency>-->
+
+
         <!-- https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-models -->
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
